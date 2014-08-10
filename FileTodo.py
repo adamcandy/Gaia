@@ -1480,17 +1480,35 @@ class FileTodos(object):
       #   has been set up.
       if re.match('^today$', word):
         self.duetext = universe.now.strftime('%y%m%d')
-        self.set_modified(self)
+        self.set_modified()
       elif re.match('^tomorrow$', word):
         self.duetext = (universe.now + timedelta(days=1)).strftime('%y%m%d')
-        self.set_modified(self)
+        self.set_modified()
       elif word in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] \
                  + ['mon', 'tues', 'tue', 'wed', 'thurs', 'thu', 'thur', 'fri', 'sat', 'sun']:
         self.duetext = next_weekday(word)
-        self.set_modified(self)
+        self.set_modified()
       elif re.match('^\d*(day|week|month|year)s*$', word):
         self.duetext = next_increment(word)
-        self.set_modified(self)
+        self.set_modified()
+
+      elif re.match('^\w+:today$', word):
+        self.starttext, self.duetext = word.rsplit(':', 1)
+        self.duetext = universe.now.strftime('%y%m%d')
+        self.set_modified()
+      elif re.match('^\w+:tomorrow$', word):
+        self.starttext, self.duetext = word.rsplit(':', 1)
+        self.duetext = (universe.now + timedelta(days=1)).strftime('%y%m%d')
+        self.set_modified()
+      elif re.match('^\w+:(monday|tuesday|wednesday|thursday|friday|saturday|sunday|mon|tues|tue|wed|thurs|thu|thur|fri|sat|sun)$', word):
+        self.starttext, self.duetext = word.rsplit(':', 1)
+        self.duetext = next_weekday(self.duetext)
+        self.set_modified()
+      elif re.match('^\w+:\d*(day|week|month|year)s*$', word):
+        self.starttext, self.duetext = word.rsplit(':', 1)
+        self.duetext = next_increment(self.duetext)
+        self.set_modified()
+
       elif re.match('^\d{6}$', word):
         self.duetext = word
       elif re.match('^\d{10}$', word):

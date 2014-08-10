@@ -37,6 +37,9 @@ def urlbasename(string):
 
 def calculate_delta(string):
   if string is None: return None
+  if string == 'morning':
+    # For same day start, at 6am
+    string = '12hours'
   num = re.findall('\d+', string)
   if len(num) > 0:
     n = float(num[0])
