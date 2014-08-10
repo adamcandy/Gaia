@@ -17,6 +17,8 @@ set wrap
 " shut case off
 syn case ignore
 
+syntax match due /\d*\(\day\|week\|month\|year\)s*/ contained
+
 syn keyword hold onhold hold paused contained
 syn keyword permanent permanent contained
 syn keyword header header contained
@@ -36,8 +38,6 @@ syn match alarm /![^ ]*/ contained
 syn keyword due today tomorrow contained
 syn keyword due monday tuesday wednesday thursday friday saturday sunday contained
 syn keyword due mon tue tues wed thu thur thurs fri sat sun contained
-
-syntax match due /\d*\(\day\|week\|month\|year\)s*/ contained
 
 syntax match due /\<\d\{6}\>/ contained
 syntax match due /\<\d\{10}\>/ contained
